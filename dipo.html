@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Pejuang UNDIP 2026 - Informatika</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 800px;
+      margin: auto;
+      padding: 1em;
+      background: #f9f9f9;
+      color: #222;
+    }
+    h1, h2 {
+      color: #004a99;
+    }
+    section {
+      background: white;
+      padding: 1em 1.5em;
+      margin: 1em 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+    }
+    input[type="checkbox"] {
+      margin-right: 8px;
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+    }
+    button {
+      cursor: pointer;
+    }
+    #saveMsg, #notesSavedMsg, #reminderMsg {
+      margin-top: 10px;
+    }
+    textarea {
+      font-family: inherit;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+    }
+    a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 DASHBOARD PEJUANG UNDIP 2026 - INFORMATIKA</h1>
+
+  <section>
+    <h2>💻 TARGET UTAMA</h2>
+    <p>Keterima di Informatika UNDIP lewat SNBT 2026</p>
+    <h2>🎓 BACKUP PLAN</h2>
+    <p>Pilihan ke-2: <input type="text" id="backupPlan" placeholder="Tulis jurusan & kampus cadangan nanti ya!" style="width:100%;"/></p>
+  </section>
+
+  <section>
+    <h2>📅 TIMELINE BELAJAR</h2>
+    <ul>
+      <li><strong>Juni - Juli 2025</strong>: Mapping materi SNBT (TPS & TKA), Review materi SMK dasar, Fokus: Matematika Dasar + Literasi</li>
+      <li><strong>Agustus - Oktober 2025</strong>: Masuk TKA Saintek, Latihan soal & Try Out mingguan, Bikin ringkasan belajar pribadi</li>
+      <li><strong>November - Desember 2025</strong>: Evaluasi progres belajar, Perbanyak latihan HOTS dan Try Out nasional, Gabung grup diskusi</li>
+      <li><strong>Januari - Februari 2026</strong>: Intensif belajar 3 jam/hari, Fokus latihan soal 3 tahun terakhir SNBT</li>
+      <li><strong>Maret - April 2026</strong>: Simulasi SNBT full time, Pemantapan & rest time</li>
+      <li><strong>Mei 2026</strong>: SNBT sesungguhnya, you got this! 💥</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🔁 TRACKER HARIAN (Checklist)</h2>
+    <form id="trackerForm">
+      <label><input type="checkbox" value="Belajar 2-3 jam" /> Belajar 2-3 jam</label>
+      <label><input type="checkbox" value="Review catatan" /> Review catatan</label>
+      <label><input type="checkbox" value="Latihan 10 soal TPS" /> Latihan 10 soal TPS</label>
+      <label><input type="checkbox" value="1x latihan TKA" /> 1x latihan TKA</label>
+      <label><input type="checkbox" value="Minum air putih 💧" /> Minum air putih 💧</label>
+      <label><input type="checkbox" value="Self-affirmation ☀️" /> Self-affirmation ☀️</label>
+
+      <p>Update mood hari ini 😌</p>
+      <label><input type="radio" name="mood" value="😊" /> 😊 Sangat semangat</label>
+      <label><input type="radio" name="mood" value="🙂" /> 🙂 Cukup semangat</label>
+      <label><input type="radio" name="mood" value="😐" /> 😐 B aja</label>
+      <label><input type="radio" name="mood" value="😣" /> 😣 Kurang fokus</label>
+      <label><input type="radio" name="mood" value="😩" /> 😩 Capek parah</label>
+
+      <button type="submit" style="margin-top:10px; padding:8px 16px; background:#004a99; color:#fff; border:none; border-radius:5px;">Simpan Tracker</button>
+    </form>
+    <p id="saveMsg" style="color:green; display:none;">Data tracker berhasil disimpan!</p>
+  </section>
+
+  <section>
+    <h2>📊 Grafik Progres Checklist Harian</h2>
+    <canvas id="progressChart" width="600" height="300"></canvas>
+  </section>
+
+  <section>
+    <h2>⏰ Reminder Harian</h2>
+    <label>
+      Set Reminder Belajar (jam:menit, 24h format):
+      <input type="time" id="reminderTime" />
+    </label>
+    <button id="setReminderBtn">Set Reminder</button>
+    <p id="reminderMsg" style="color:green; display:none;">Reminder sudah di-set!</p>
+  </section>
+
+  <section>
+    <h2>🎧 Playlist Fokus Belajar</h2>
+    <ul id="playlist">
+      <li><a href="https://www.youtube.com/watch?v=5qap5aO4i9A" target="_blank" rel="noopener">Lofi Hip Hop Radio - Beats to Relax/Study To</a></li>
+      <li><a href="https://www.youtube.com/watch?v=DWcJFNfaw9c" target="_blank" rel="noopener">Chillhop Essentials - Summer 2023</a></li>
+      <li><a href="https://www.youtube.com/watch?v=7NOSDKb0HlU" target="_blank" rel="noopener">Focus Music for Studying</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>💬 Quote Afirmasi Harian</h2>
+    <blockquote id="quoteAffirmation" style="font-style: italic; font-size: 1.2em; color: #0077cc; margin: 1em 0;"></blockquote>
+    <button id="newQuoteBtn" style="padding: 6px 12px; border: none; background-color: #0077cc; color: white; border-radius: 5px; cursor: pointer;">Quote Baru</button>
+  </section>
+
+  <section>
+    <h2>📝 Catatan Mingguan/Bulanan</h2>
+    <textarea id="progressNotes" rows="6" placeholder="Tulis catatan atau refleksi belajarmu di sini..."></textarea>
+    <button id="saveNotesBtn" style="margin-top:10px; padding: 8px 15px; border:none; border-radius:6px; background-color:#28a745; color:white; cursor:pointer;">Simpan Catatan</button>
+    <p id="notesSavedMsg" style="color:green; display:none; margin-top:5px;">Catatan berhasil disimpan!</p>
+  </section>
+
+<script>
+  // Tracker Form
+  const form = document.getElementById('trackerForm');
+  const saveMsg = document.getElementById('saveMsg');
+  let selectedMood = null;
+  form.mood.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      selectedMood = e.target.value;
+    });
+  });
+
+  function updateProgressChart() {
+    const savedData = JSON.parse(localStorage.getItem('dashboardPejuangUNDIPHistory') || '[]');
+
+    const labels = savedData.map(d => d.tanggal);
+    const data = savedData.map(d => {
+      const totalTasks = d.tasksTotal || 6;
+      const doneTasks = d.tasks.length;
+      return Math.round((doneTasks / totalTasks) * 100);
+    });
+
+    if (window.progressChart) {
+      window.progressChart.data.labels = labels;
+      window.progressChart.data.datasets[0].data = data;
+      window.progressChart.update();
+    } else {
+      const ctx = document.getElementById('progressChart').getContext('2d');
+      window.progressChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Persentase Tugas Harian Selesai (%)',
+            data,
+            fill: false,
+            borderColor: 'rgb(0, 85, 170)',
+            tension: 0.1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              min: 0,
+              max: 100,
+              ticks: {
+                stepSize: 20
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!selectedMood) {
+      alert('Pilih mood hari ini dulu ya!');
+      return;
+    }
+
+    const tasks = [...form.querySelectorAll('input[type=checkbox]:checked')].map(cb => cb.value);
+    const notes = document.getElementById('progressNotes').value.trim();
+    const backupPlan = document.getElementById('backupPlan').value.trim();
+
+    const tanggal = new Date().toLocaleDateString();
+
+    const data = { tanggal, tasks, mood: selectedMood, notes, backupPlan, tasksTotal: 6 };
+
+    localStorage.setItem('dashboardPejuangUNDIP',
